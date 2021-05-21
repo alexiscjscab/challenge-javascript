@@ -119,20 +119,20 @@ describe('Practica del Checkpoint M1', function(){
 
     describe("EJERCICIO 4: OrderedLinkedList metodo add", function(){
         let ll = new OrderedLinkedList()
-        xit("debe agregar nodos a la OrderedLinkedList", function(){
+        it("debe agregar nodos a la OrderedLinkedList", function(){
             ll.add(5)
             let ll2 = new OrderedLinkedList()
             ll2.head = new Node(5)
             expect(ll).to.be.deep.equal(ll2)
         })
-        xit("debe agregar nodos a la OrderedLinkedList, despues de los nodos mayores al argumento", function(){
+        it("debe agregar nodos a la OrderedLinkedList, despues de los nodos mayores al argumento", function(){
             ll.add(1)
             let ll2 = new OrderedLinkedList()
             ll2.head = new Node(5)
             ll2.head.next = new Node(1)
             expect(ll).to.be.deep.equal(ll2)
         })
-        xit("debe agregar nodos a la OrderedLinkedList, antes de los nodos menores al argumento", function(){
+        it("debe agregar nodos a la OrderedLinkedList, antes de los nodos menores al argumento", function(){
             ll.add(4)
             let ll2 = new OrderedLinkedList()
             ll2.head = new Node(5)
@@ -143,7 +143,7 @@ describe('Practica del Checkpoint M1', function(){
     })
 
     describe("EJERCICIO 5: OrderedLinkedList metodo removeHigher", function(){
-        xit("debe retirar los nodos mas grandes de la OrderedLinkedList", function(){
+        it("debe retirar los nodos mas grandes de la OrderedLinkedList", function(){
             let ll = new OrderedLinkedList()
             ll.head = new Node(5)
             ll.head.next = new Node(4)
@@ -153,7 +153,7 @@ describe('Practica del Checkpoint M1', function(){
             expect(ll.removeHigher()).to.be.equal(1)
             expect(ll.head).to.be.equal(null)
         })
-        xit("si la OrderedLinkedList esta vacia debe retornar null", function(){
+        it("si la OrderedLinkedList esta vacia debe retornar null", function(){
             let ll = new OrderedLinkedList()
             expect(ll.removeHigher()).to.be.equal(null)
             expect(ll.removeHigher()).to.be.equal(null)
@@ -162,7 +162,7 @@ describe('Practica del Checkpoint M1', function(){
     })
 
     describe("EJERCICIO 6: OrderedLinkedList metodo removeLower", function(){
-        xit("debe retirar los nodos mas chicos de la OrderedLinkedList", function(){
+        it("debe retirar los nodos mas chicos de la OrderedLinkedList", function(){
             let ll = new OrderedLinkedList()
             ll.head = new Node(5)
             ll.head.next = new Node(4)
@@ -172,7 +172,7 @@ describe('Practica del Checkpoint M1', function(){
             expect(ll.removeLower()).to.be.equal(5)
             expect(ll.head).to.be.equal(null)
         })
-        xit("si la OrderedLinkedList esta vacia debe retornar null", function(){
+        it("si la OrderedLinkedList esta vacia debe retornar null", function(){
             let ll = new OrderedLinkedList()
             expect(ll.removeLower()).to.be.equal(null)
             expect(ll.removeLower()).to.be.equal(null)
@@ -209,60 +209,60 @@ describe('Practica del Checkpoint M1', function(){
         const BST = new BinarySearchTree(32)
         const arr = [8, 64, 5, 9];
         arr.forEach(e => BST.insert(e))
-        xit("Debe devolver un Array", function(){
+        it("Debe devolver un Array", function(){
             expect(BST.toArray() instanceof Array).to.be.true;
         })
-        xit("Debe devolver todos los elementos del arbol", function(){
+        it("Debe devolver todos los elementos del arbol", function(){
             expect(BST.toArray() instanceof Array).to.be.true;
             expect(BST.toArray().length).to.be.equal(5);
         })
-        xit("Debe devolver todos los elementos del arbol, en un array ordenado", function(){
+        it("Debe devolver todos los elementos del arbol, en un array ordenado", function(){
             expect(BST.toArray()).to.be.deep.equal([ 5, 8, 9, 32, 64 ]);
         })
     })
 
     describe("EJERCICIO 9: primalityTest", function(){
-        xit("debe de retornar 'true' si el numero es primo", function(){
+        it("debe de retornar 'true' si el numero es primo", function(){
             expect(primalityTest(2)).to.be.true;
             expect(primalityTest(3)).to.be.true;
             expect(primalityTest(5)).to.be.true;
             expect(primalityTest(7)).to.be.true;
         })
-        xit("debe de retornar 'false' si el numero NO es primo", function(){
+        it("debe de retornar 'false' si el numero NO es primo", function(){
             expect(primalityTest(4)).to.be.false;
             expect(primalityTest(6)).to.be.false;
             expect(primalityTest(8)).to.be.false;
             expect(primalityTest(9)).to.be.false;
         })
-        xit("debe de retornar 'false' si el numero es menor que 2", function(){
+        it("debe de retornar 'false' si el numero es menor que 2", function(){
             expect(primalityTest(-1)).to.be.false;
             expect(primalityTest(0)).to.be.false;
             expect(primalityTest(1)).to.be.false;
         })
-        xit("debe de estar lo suficientemente optimizado como para tardar menos de 2s con numeros grandes", function(){
+        it("debe de estar lo suficientemente optimizado como para tardar menos de 2s con numeros grandes", function(){
             expect(primalityTest(1902680207)).to.be.true;
         })
     })
 
     describe("EJERCICIO 10: quickSort", function(){
         const arr = [2,5,9,3,4,7,1]
-        xit("no debe de utilizar el metodo sort", function(){
+        it("no debe de utilizar el metodo sort", function(){
             expect(quickSort.toString().includes('.sort')).to.be.false;
         })
-        xit("debe devolver el arreglo ordenado", function(){
+        it("debe devolver el arreglo ordenado", function(){
             expect(quickSort(arr)).to.be.deep.equal(arr.sort().reverse())
         })
     })
 
     describe("EJERCICIO 11: reverse", function(){
-        xit("no debe de utilizar arrays o strings ni ninguna estructura identable", function(){
+        it("no debe de utilizar arrays o strings ni ninguna estructura identable", function(){
             const forbiddenKeys = ['function','=>','[',']','.toString()','String','stringify','Array','.pop','.push','.shift','.unshift','in']
             const reverseString = reverse.toString().slice(8)
             forbiddenKeys.forEach(key => {
                 expect(reverseString.includes(key)).to.be.false;
             })
         })
-        xit("debe devolver el numero invertido", function(){
+        it("debe devolver el numero invertido", function(){
             reverse(123);
             reverse(13543216)
             reverse(85498322791)

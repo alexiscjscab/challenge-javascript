@@ -415,8 +415,13 @@ function quickSort(array) {
 // > reverse(95823);
 // < 32859
 
-function reverse(num){
-
+function reverse(num, lastNum = 0){
+    let digito = num;
+    do{
+        lastNum = lastNum * 10 + (digito % 10)
+        digito = Math.floor(digito/10)
+    }while(digito > 0)
+    return lastNum
 }
 
 console.log(reverse(123));
