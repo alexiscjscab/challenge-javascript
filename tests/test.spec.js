@@ -21,19 +21,19 @@ describe('Practica del Checkpoint M1', function(){
         let sqrt = exponencial(2);
         let e4 = exponencial(4);
         let e3 = exponencial(3);
-        xit('La funcion hija debe de elevar al cuadrado, si 2 le es pasado como parametro a la funcion padre', function() {
+        it('La funcion hija debe de elevar al cuadrado, si 2 le es pasado como parametro a la funcion padre', function() {
             expect(typeof sqrt).to.be.equal('function');
             expect(sqrt(2)).to.be.equal(4);
             expect(sqrt(3)).to.be.equal(9);
             expect(sqrt(4)).to.be.equal(16);
         });
-        xit('La funcion hija debe de elevar al cubo, si 3 le es pasado como parametro a la funcion padre', function() {
+        it('La funcion hija debe de elevar al cubo, si 3 le es pasado como parametro a la funcion padre', function() {
             expect(typeof e3).to.be.equal('function');
             expect(e3(2)).to.be.equal(8);
             expect(e3(3)).to.be.equal(27);
             expect(e3(4)).to.be.equal(64);
         });
-        xit('La funcion hija debe de elevar a 4, si 4 le es pasado como parametro a la funcion padre', function() {
+        it('La funcion hija debe de elevar a 4, si 4 le es pasado como parametro a la funcion padre', function() {
             expect(typeof e4).to.be.equal('function');
             expect(e4(2)).to.be.equal(16);
             expect(e4(3)).to.be.equal(81);
@@ -77,13 +77,13 @@ describe('Practica del Checkpoint M1', function(){
                 }, E: 'pared', O: 'pared'
             }, O: 'pared'
         }
-        xit("Si no se le pasa un laberinto debe retornar ''", function() {
+        it("Si no se le pasa un laberinto debe retornar ''", function() {
             expect(direcciones()).to.be.equal('');
         });
-        xit("Si se le pasa un laberinto sin destino debe retornar ''", function() {
+        it("Si se le pasa un laberinto sin destino debe retornar ''", function() {
             expect(direcciones({N:'pared', S:'pared', E:'pared', O:'pared'})).to.be.equal('');
         });
-        xit("Debe encontrar el destino dentro del laberinto y retornar los movimientos", function() {
+        it("Debe encontrar el destino dentro del laberinto y retornar los movimientos", function() {
             expect(direcciones(lab1)).to.be.equal('SOS');
             expect(direcciones(lab2)).to.be.equal('ESONOSE');
             expect(direcciones(lab3)).to.be.equal('ESOSEE');
@@ -91,25 +91,25 @@ describe('Practica del Checkpoint M1', function(){
     })
 
     describe('EJERCICIO 3: deepEqualArrays', function(){
-        xit('Debe hacer comparaciones superficiales', function(){
+        it('Debe hacer comparaciones superficiales', function(){
             expect(deepEqualArrays(
                 [0,1,2],
                 [0,1,2]
             )).to.be.true;
         })
-        xit('Debe comparar el tipo de cada elemento tambien', function(){
+        it('Debe comparar el tipo de cada elemento tambien', function(){
             expect(deepEqualArrays(
                 [0,1,2],
                 ['0','1','2']
             )).to.be.false;
         })
-        xit('Debe comparar todos los elementos de ambos arrays', function(){
+        it('Debe comparar todos los elementos de ambos arrays', function(){
             expect(deepEqualArrays(
                 [0,1,2],
                 [0,1,2,4]
             )).to.be.false;
         })
-        xit("Debe de hacer comparacion en 'profundidad'", function(){
+        it("Debe de hacer comparacion en 'profundidad'", function(){
             expect(deepEqualArrays(
                 [0,1,[[0,1,2],1,2]],
                 [0,1,[[0,1,2],1,2]]
@@ -190,17 +190,17 @@ describe('Practica del Checkpoint M1', function(){
             {cb:()=>(arr.push('2-1'),'2-1'), time: 1},
             {cb:()=>(arr.push('2-2'),'2-2'), time: 4}
         ];
-        xit("todas las funciones(callbacks) deben haber sido llamadas", function(){
+        it("todas las funciones(callbacks) deben haber sido llamadas", function(){
             arr = []
             multiCallbacks([...cbs1], [...cbs2])
             expect(arr.length).to.be.equal(4)
         })
-        xit("las funciones deben haber sido llamadas en el orden correcto", function(){
+        it("las funciones deben haber sido llamadas en el orden correcto", function(){
             arr = []
             multiCallbacks([...cbs1], [...cbs2])
             expect(arr).to.be.deep.equal([ '2-1', '1-1', '1-2', '2-2' ])
         })
-        xit("la funcion 'multiCallbacks' debe retornar un array con los resultados en el orden correcto", function(){
+        it("la funcion 'multiCallbacks' debe retornar un array con los resultados en el orden correcto", function(){
             expect(multiCallbacks([...cbs1], [...cbs2])).to.be.deep.equal([ '2-1', '1-1', '1-2', '2-2' ])
         })
     })
@@ -263,6 +263,10 @@ describe('Practica del Checkpoint M1', function(){
             })
         })
         xit("debe devolver el numero invertido", function(){
+            reverse(123);
+            reverse(13543216)
+            reverse(85498322791)
+            reverse(32168448733)
             expect(reverse(123)).to.be.equal(321);
             expect(reverse(13543216)).to.be.equal(61234531);
             expect(reverse(85498322791)).to.be.equal(19722389458);

@@ -33,7 +33,9 @@ const {
 // < 16
 
 function exponencial(exp) {
-
+   return (base) =>{
+       return Math.pow(base,exp)
+   }
 }
 
 // ----- Recursión -----
@@ -69,9 +71,22 @@ function exponencial(exp) {
 // haciendo los movimientos SUR->ESTE->NORTE
 // Aclaraciones: el segundo parametro que recibe la funcion ('direccion') puede ser pasado vacio (null)
 
-function direcciones(laberinto) {
+function direcciones(laberinto, direccion = '') {
 
+    if(!laberinto) return '';
+    for(let key in laberinto){
+        if(laberinto[key] !== 'pared'){
+            direccion += key;
+            if(laberinto[key] !== 'destino'){
+                return direcciones(laberinto[key],direccion);
+            }else{
+                return direccion;
+            }
+        }
+    }
+    return '';
 }
+
 
 
 // EJERCICIO 3
@@ -87,9 +102,21 @@ function direcciones(laberinto) {
 // deepEqualArrays([0,1,2], [0,1,2,3]) => false
 // deepEqualArrays([0,1,[[0,1,2],1,2]], [0,1,[[0,1,2],1,2]]) => true
 
-function deepEqualArrays(arr1, arr2) {
+function deepEqualArrays(array1, array2,bandera = true) {
 
+    if(array1.length !== array2.length) bandera = false;
+
+    for( i = 0 ; i < array1.length ; i++){
+        if(array1[i] !== array2[i]){
+            if(array1[i] instanceof Array && array2[i] instanceof Array){
+                return deepEqualArrays(array1[i],array2[i],bandera)
+            }
+            bandera = false;
+        }
+    }
+    return bandera;
 }
+
 
 
 
@@ -139,10 +166,30 @@ OrderedLinkedList.prototype.print = function(){
 // < 'head --> 5 --> 3 --> 1 --> null'
 //               4
 OrderedLinkedList.prototype.add = function(val){
-    
+    if (!this.head){
+        this.head = new Node (val)
+        return; 
+   }
+
+   var current = this.head
+
+   if(val > this.head.value){
+       this.head = new Node(val);
+       this.head.next = current;
+       return
+   }
+
+   while (current.next){
+       if( val > current.next.value){
+           var aux = current.next;
+           current.next = new Node(val);
+           current.next.next = aux;
+           return
+       }
+       current.next = current.next.next
+   }
+   current.next = new Node(val);
 }
-
-
 // EJERCICIO 5
 // Crea el metodo 'removeHigher' que deve devolver el valor mas alto de la linked list 
 // removiendo su nodo corresponidente:
@@ -159,7 +206,10 @@ OrderedLinkedList.prototype.add = function(val){
 // < null
 
 OrderedLinkedList.prototype.removeHigher = function(){
-    
+  if (!this.head) return null;  // Si no hay head retornamos null
+  val = this.head.value; // ponemos una variable con el valor del head
+  this.head = this.head.next; // y en el head guardamos el valor siguiente
+  return val; //  y retornamos el valor
 }
 
 
@@ -179,7 +229,24 @@ OrderedLinkedList.prototype.removeHigher = function(){
 // < null
 
 OrderedLinkedList.prototype.removeLower = function(){
+    if(!this.head) return null; //Si no hay head retornamos null
+
+    var current = this.head; // guardamos en curren el head;
     
+    if(!current.next){ //Si no hay current.next tiene un solo elemento;
+      var min = current.value; // Ponemos en mi el valor del current
+      this.head = null; // al head lo ponemos en null
+      return min;  // Lo retornamos
+    }
+
+    // En caso de ser falso
+    while (current.next.next){ //Recorre el while hasta el ante ultimo
+        current = current.next
+    }
+    var min = current.next.value; //ponemos el valor del ultimo
+    current.next = null; // y al valor anterior ponemos el next en null
+
+    return min; // Lo retronamos
 }
 
 
@@ -211,8 +278,41 @@ OrderedLinkedList.prototype.removeLower = function(){
 // > multiCallbacks(cbs1, cbs2);
 // < ["2-1", "1-1", "1-2", "2-2"];
 
-function multiCallbacks(cbs1, cbs2){
-    
+function multiCallbacks(cbs1, cbs2,){
+   //concateno el cbs1 con cbs2, con sort lo ordeno de menor a mayor por la propiedad time que tiene
+    let callbacks = cbs1.concat(cbs2).sort(function(elementA, elementB){
+        return elementA.time - elementB.time;
+    });
+    let results = [];
+    //itero por cada uno de esos callbacks y pusheo el resultado de ejecutar la funcion cb
+    for(let i = 0; i < callbacks.length; i++) {
+        results.push(callbacks[i].cb());
+    };
+    return results;
+ 
+
+
+
+//     var colaEjecucion = new Queue;
+
+//     var cbs = cbs1.concat(cbs2);
+//     var cuantos = cbs.length;
+
+//     while (cbs.length){
+//         var min = 0 ;
+//         for( var j = 1; j< cbs.length; j++){
+//             if(cbs[0].time > cbs[j].time){
+//                 min = j;
+//             }
+//         }
+//         colaEjecucion.enqueue(cbs[min].cb());
+//         cbs = cbs.filter(function(e, i){if(i !== min){return e} })
+//     }
+//     var resultados = [];
+//     for(var i = 0; i < cuantos; i++){
+//         resultados.push(colaEjecucion.dequeue());
+//     }
+//     return resultados;
 }
 
 
@@ -231,7 +331,13 @@ function multiCallbacks(cbs1, cbs2){
 // resultado:[5,8,9,32,64]
 
 BinarySearchTree.prototype.toArray = function() {
+    let array = [];
+
+    this.depthFirstForEach(function(value){
+        array.push(value)
+    },'in-order')
     
+    return array;
 }
 
 
@@ -250,7 +356,20 @@ BinarySearchTree.prototype.toArray = function() {
 // informarse sobre algoritmos, leerlos de un pseudocodigo e implemnterlos alcanzara
 
 function primalityTest(n) {
-    
+    let primo = true;
+    if(n<2){
+        primo = false;
+    }
+    else{
+        for(let x=2; x*x<=n; x++){
+            if( n%x==0 ){
+                primo = false;
+                break;
+            }
+        }
+    }
+    return primo;
+
 }
 
 
@@ -260,7 +379,21 @@ function primalityTest(n) {
 // https://en.wikipedia.org/wiki/Quicksort
 
 function quickSort(array) {
+    if(array.length < 1){
+        return [];
+      }
+      var left = [];
+      var right = [];
+      var pivot = array[0] //Usamos como pivote el primer elemento
     
+      for (var i = 1; i < array.length; i++){
+        if(array[i] > pivot){
+          left.push(array[i]);
+        }else{
+          right.push(array[i]);
+        }
+      }
+      return [].concat(quickSort(left),pivot,quickSort(right))
 }
 // QuickSort ya lo conocen solo que este 
 // ordena de mayor a menor
@@ -283,8 +416,10 @@ function quickSort(array) {
 // < 32859
 
 function reverse(num){
-    
+
 }
+
+console.log(reverse(123));
 // la grandiosa resolucion de Wilson!!!
 // declaran una variable donde 
 // almacenar el el numero invertido
